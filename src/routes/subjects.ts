@@ -10,10 +10,10 @@ router.get("/", async (req, res) => {
     try {
         const { search, department, page = 1, limit = 10 } = req.query;
 
-        const currnetPage = Math.max(1, +page);
-        const pageSize = Math.max(1, +limit);
+        const currentPage = Math.max(1, Number(page) || 1);
+        const pageSize = Math.max(1, Number(limit) || 10);
 
-        const offset = (currnetPage - 1) * pageSize;
+        const offset = (currentPage - 1) * pageSize;
 
         const filterConditions = [];
 
@@ -60,7 +60,7 @@ router.get("/", async (req, res) => {
             data: subjectsList,
             pagination: {
                 total: totalCount,
-                page: currnetPage,
+                page: currentPage,
                 limit: pageSize,
                 totalPages: Math.ceil(totalCount / pageSize),
             },

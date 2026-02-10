@@ -5,8 +5,13 @@ import SubjectRouter from './routes/subjects';
 const app = express();
 const port = 8000;
 
+const FRONTEND_URL = process.env.FRONTEND_URL;
+if (!FRONTEND_URL) {
+    console.warn('FRONTEND_URL is not set — CORS will reject all cross-origin requests');
+}
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: FRONTEND_URL || false,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
